@@ -104,3 +104,29 @@ The dialog will open to specify parameters for the member organization. Make sur
 Click on the button <code>Create</code>. Your instance is getting provisioned and soon will be available.
 
 ![Create Founder](images/member-create-2.png)
+
+### Connect Tax Authority (Founder Org) with Work and Pension Department (Member Org)
+ 
+Let's connect blockchain organizations created in previous chapters. Admins of the instances will collaborate to exchange essential information.
+
+1. Login to <code>Work and Pension Department</code> (Member Org) service console
+![](images/connect-export-certificates-member-1.png)
+2. Go to the step 2 and click <code>Export</code> button to export certificates into a JSON file.
+![](images/connect-export-certificates-member-2.png)
+3. Login to <code>Tax Authority</code> (Founder Org) service console, and click on <code>Add Organizations</code>
+![](images/connect-export-certificates-member-3.png)
+4. Select the exported json file from the 2nd step, describing <code>Work and Pension Department</code> organization, and press <code>Add</code>.
+![](images/connect-export-certificates-member-4.png)
+5. <code>Work and Pension Department</code> (Member Org) is successfully added. Click on <code>Export Orderer Settings</code> from the modal window, and save the JSON file.
+![](images/connect-export-certificates-member-5.png)
+6. <code>Open Work and Pension Department</code> (Member Org) service console again, and select <code>Step 3</code>. Select the JSON from the previous step, and click <code>Import</code>. You have just imported <code>Tax Authority</code> (Founder Org) orderers into the  <code>Work and Pension Department </code> (Member Org) organization, making it ready to sign the blocks.
+![](images/connect-export-certificates-member-6.png)
+7. Click on <code>Step 4</code> to complete the process and exit the wizard.
+8. exchange orderers
+9. create channel
+
+### Install AppBuilder CLI
+
+### Develop UC 1
+
+### Develop UC 2
