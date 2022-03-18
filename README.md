@@ -4,9 +4,9 @@ What is a Blockchain? What can Oracle Blockchain offer beyond Hyperledger Fabric
 ## Introduction
 
 ### A Blockchain
-A blockchain is a system for storing data through distributed ledgers, powered by cryptography and automation. I could paraphrase it as a distributed database, but it wouldn't be fair since it's so much more. One way of looking at it might be a distributed database with a continuously growing list of irreversible records (called blocks) linked and secured using cryptography. Still, it's more than that since it contains the business logic inside (called smart contracts), enabling the automation of business processes between different organizations, in a distributed network, without any manual integrations. 
+A blockchain is a system for storing data through distributed ledgers, powered by cryptography and automation. One could paraphrase it as a distributed database, but it wouldn't be fair since it's so much more. One way of looking at it might be a distributed database with a continuously growing list of irreversible records (called blocks) linked and secured using cryptography. Still, it's more than that since it contains the business logic inside (called smart contracts), enabling the automation of business processes between different organizations, in a distributed network, without any manual integrations. 
 
-Blockchain was first introduced in 2008 as the distributed ledger behind Bitcoin and evolved in many variations. Nowadays, blockchains evolved into private, public, and hybrid networks. Bitcoin and Ethereum are public permissionless blockchains, while Hyperledger Fabric implements private permissioned blockchain. A permissioned blockchain network typically has a founder that creates and maintains the network and participants that join the network. Since it's permissioned, you cannot gain access to it unless explicitly given by the founder.
+Blockchain was first introduced in 2008 as the distributed ledger behind Bitcoin and evolved in many variations. Bitcoin [manifesto](https://bitcoin.org/bitcoin.pdf) never mentioned it explicitly, but you would find many mentions of blocks and chains. The community later forged the blockchain term to describe underlying technology and techniques. Nowadays, blockchains evolved into private, public, and hybrid networks. Bitcoin and Ethereum are public permissionless blockchains, while Hyperledger Fabric implements private permissioned blockchain. A permissioned blockchain network typically has a founder that creates and maintains the network and participants that join the network. Since it's permissioned, you cannot gain access to it unless explicitly given by the founder.
 
 ### What is Hyperledger Fabric?
 Hyperledger Fabric is an enterprise-grade, permissioned blockchain framework applicable to a broad set of industry use cases. It is a widely adopted open-source tool under the Linux Foundation.
@@ -63,15 +63,44 @@ What is the next step? Let's build a blockchain network and independent governme
 ## Hands-On
 
 ### Create Tax Authority (Founder Org) instance of Oracle Blockchain
-In the OCI menu, locate Blockhain Platform (Developer Services -> Blockchain Platform) and click on it.      
+The first step to demonstrate our use case is to create a founder organization - <code>Tax Authority</code>.
+Locate Blockchain Platform (Developer Services -> Blockchain Platform) in the OCI menu and click on it.      
 
 ![Menu](images/general-menu-1.png)
 
-Press Create Blockchain Platform button. This will open a dialog to specify parameters fo the founder organization.
+Press <code>Create Blockchain Platform</code> button.
 
 ![Create Founder](images/founder-create-1.png)
-Make sure you select "Create a new network", since we are creating founder instance. Founder instance has the priviledge to control late joiners into the network. Sine we are doing just a prototype, we will use Standard edition, bringing 2 OCPUs (two physical cores), 50GB of storage and 2 peer nodes. Remember, peer nodes are the nodes responsible for preservance of the data in blockchain. In ideal production world, you would like to have more peer nodes due to security and availabiltiy requirements.
+
+The Dialog will open to specify parameters for the founder organization. Make sure you select <code>Create a new network</code> since we create the founder instance. Founder instance has the privilege to control joiners into the network. Select <code>Hyperledger Fabric v2.2.4</code>, or later if available. Since we are building a prototype, we will use <code>Standard Edition</code>, bringing 2 OCPUs (two physical cores), 50GB of storage, and 2 peer nodes.
+Additionally, it will create 3 orderer nodes and one CA node. Peer nodes are responsible for the data store of blockchain transactions and a world state. Orderer nodes seal transactions in blocks and act as consensus enablers. CA node issues certificates for network members. You would like to have more peer nodes in the production environment due to security and availability requirements.
 
 ![Create Founder](images/founder-create-2.png)
 
+Click on the button <code>Create</code>. Your instance is getting provisioned in status <code>Creating</code>.
+
+![Create Founder](images/founder-create-3.png)
+
+After a couple of minutes, the founder instance will be ready to play.
+
+![Create Founder](images/founder-create-4.png)
+
+We leave the founder instance alone for a couple of minutes while we provision the member instance in the following chapter.
+
 ### Create Work and Pension Department (Member Org) instance of Oracle Blockchain
+The second step is to create a member organization to join the network created in the previous step - <code>Work and Pension Department</code>.
+Locate Blockchain Platform (Developer Services -> Blockchain Platform) in the OCI menu and click on it.
+
+![Menu](images/general-menu-1.png)
+
+Press <code>Create Blockchain Platform</code> button.
+
+![Create Founder](images/founder-create-1.png)
+
+The dialog will open to specify parameters for the member organization. Make sure you select <code>Join an existing network</code>. Member instance network served by the founder organization. Select <code>Hyperledger Fabric v2.2.4</code>, or later if available. We will use <code>Standard Edition</code> again. I will use 2 OCPUs (two physical cores), 50GB of storage, and 2 peer nodes, without any orderers or CAs.
+
+![Create Founder](images/member-create-1.png)
+
+Click on the button <code>Create</code>. Your instance is getting provisioned and soon will be available.
+
+![Create Founder](images/member-create-2.png)
