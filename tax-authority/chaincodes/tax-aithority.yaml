@@ -1,0 +1,113 @@
+assets:
+    - name: employer
+      properties:
+          - name: taxNumber
+            type: string
+            mandatory: true
+            id: true
+            validate: min(11),max(11)
+          - name: name
+            type: string
+            mandatory: true
+          - name: phone
+            type: string
+          - name: email
+            type: string
+            validate: email()
+          - name: address
+            type: address
+          - name: employees
+            type: string[]
+          - name: contracts
+            type: string[]
+      methods:
+          crud: [create, getById, update, delete]
+          others: [getHistoryById, getByRange]
+    - name: person
+      properties:
+          - name: taxIdentificationNumber
+            type: string
+            mandatory: true
+            id: true
+          - name: tajNumber
+            type: string
+            mandatory: true
+          - name: firstName
+            type: string
+            mandatory: true
+          - name: lastName
+            type: string
+            mandatory: true
+          - name: dateOfBirth
+            type: date
+          - name: citizenship
+            type: string
+          - name: address
+            type: address
+          - name: employers
+            type: string[]
+          - name: contracts
+            type: string[]
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange]
+    - name: contract
+      properties:
+        - name: contractId
+          type: string
+          mandatory: true
+          id: true
+        - name: contractDate
+          type: date
+          mandatory: true
+        - name: personId
+          type: string
+          mandatory: true
+        - name: employerId
+          type: string
+          mandatory: true
+        - name: weekWorkingHours
+          type: number
+        - name: insuranceStart
+          type: date
+        - name: insuranceEnd
+          type: date
+        - name: suspensionStart
+          type: date
+        - name: suspensionEnd
+          type: date
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange]
+    - name: address
+      type: embedded
+      properties:
+          - name: city
+            type: string
+            mandatory: true
+          - name: postalCode
+            type: string
+            mandatory: true
+          - name: streetName     
+            type: string
+            mandatory: true
+          - name: houseNumber     
+            type: string
+            mandatory: true
+          - name: building
+            type: string
+          - name: entrace
+            type: string
+          - name: floor
+            type: string
+          - name: door
+            type: string
+customMethods:
+    - executeQuery
+    - "createRelationship(employeeId: string, employerId: string, workingHours: number, effectiveDate: Date, contractDate: Date, contractId: string)"
+    - "updateRelationship(contractId: string, workingHours: number, effectiveDate: Date)"
+    - "terminateRelationship(contractId: string, effectiveDate: Date)"
+    - "suspendRelationshipStart(contractId: string, suspensionStartDate: Date)"
+    - "suspendRelationshipEnd(contractId: string, suspensionEndDate: Date)"
+    - "suspendAllRelationshipStart(employeeId: string, suspensionStartDate: number)"
+    - "suspendAllRelationshipEnd(employeeId: string, suspensionEndDate: number)"

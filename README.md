@@ -1,7 +1,12 @@
 # How to simplify Hyperledger development with Oracle Blockchain App Builder
 What is a Blockchain? What can Oracle Blockchain offer beyond Hyperledger Fabric? How to build a production-grade blockchain network with smart contracts and test them locally? Why should you leverage DLT and smart contracts in every typical architecture? Continue reading and explore highlights of Oracle Blockchain Platform, together with a new toolset for building smart contracts - Blockchain App Builder.
 
+You can find the following topics:
+* [Introduction](#introduction)
+* [Hands-On](#hands-on)
+
 ## Introduction
+------
 
 ### A Blockchain
 A blockchain is a system for storing data through distributed ledgers, powered by cryptography and automation. One could paraphrase it as a distributed database, but it wouldn't be fair since it's so much more. One way of looking at it might be a distributed database with a continuously growing list of irreversible records (called blocks) linked and secured using cryptography. Still, it's more than that since it contains the business logic inside (called smart contracts), enabling the automation of business processes between different organizations, in a distributed network, without any manual integrations. 
@@ -16,6 +21,8 @@ Hyperledger Fabric components create a decentralized network. The network may co
 ![Hyperledger Fabric Architecture](images/hl-architecture-1.png)
 
 The essential Hyperledger Fabric components are Peers, Orderers and Certificate Authorities. Peers hold the log of transactions (the blockchain) and the world state (aggregated view of all transactions). Orderers maintain the consistency of the state and create blocks of transactions. Certificate Authorities connect the whole network via the certificate's chain of trust by issuing keys to selected participants.
+
+![](images/hl-architecture-3.png)
 
 Other substantial Fabric components are Channels and Chaincodes. Channel is a crucial abstraction in Hyperledger Fabric, ensuring privacy and isolation among network members if needed. You can consider it a concept similar to VLAN in networking, preventing other computers on the same physical network from sensing your traffic and data. Another way of looking at it might be a VM hypervisor that enables multiple VMs on a single bare-metal computer. This is what channels essentially are - isolation and privacy of members in the same physical blockchain network. All peers belonging to a channel have access to the same data and smart contracts. There is no access to it outside the channel. The below diagram describes channels and their interaction with peers. Two distinct channels (default and dev) are isolated from each other. The default channel is executed on both peers (peer0 and peer1), while the dev channel is executed only within peer0.
 
@@ -60,7 +67,8 @@ What is the next step? Let's build a blockchain network and independent governme
 
 ![](images/uc-egov-4.png)
 
-## Hands-On
+## Build Demo
+------
 
 ### Create Tax Authority (Founder Org) instance of Oracle Blockchain
 The first step to demonstrate our use case is to create a founder organization - <code>Tax Authority</code>.
@@ -125,8 +133,70 @@ Let's connect blockchain organizations created in previous chapters. Admins of t
 8. exchange orderers
 9. create channel
 
+### AppBuilder Intro
+Oracle Blockchain App Builder is a toolset for rapid and manageable Hyperledger Fabric development that helps to develop, test, debug, and deploy smart contracts (chaincodes). It is comprised of:
+* [CLI](#install-appbuilder-cli)
+* Visual Studio Code extension
+* Specification files
+
+Visual Studio Code extension is user friendly managment of CLI operations. In this tutorial, I will use only CLI.
+
+App Builder process starts with design of Specification file, which is then transformed into the scaffold chaincode project. It's a boilerplate project implemented in preffered language: TypeScript or Go. Scaffold chaincode project will save you a lot of time, since it generates assets with basic CRUD operations. Even if you don't add any custom operations, generated project will server as a chaincode capable of executing basic chaincode operatiosn, such as creating, reading, updating and deleting assets.
+![](images/appbuilder-process-1.png)
+Running and deployind options from the upper diagram are closely coupled with the ochain CLI after the scaffold chaincode is generated.
+
 ### Install AppBuilder CLI
+Installation of App Builder is dependent upon your operating system. Please follow the detailed guide from [official docs](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/usingoci/install-and-configure-dev-tools-cli.html).
 
-### Develop UC 1
+If the installation was successful, you can run the ```ochain``` command. Type ```ochain``` into the terminal and you will get a list of available commands:
+* <code>init</code> - Initialize a new chaincode project
+* <code>run</code> - Run chaincode project locally in debug mode
+* <code>stop</code> - Shutdown all chaincode services locally
+* <code>invoke</code> - Invoke a chaincode transaction locally
+* <code>query</code> - Invoke a chaincode query locally
+* <code>package</code> - Package and archive a chaincode project for manual deployment using OBP Admin UI
+* <code>deploy</code> - Deploy chaincode project to remote OBP
+* <code>sync</code> - Synchronize changes from spec file to the required chaincode
+* <code>upgrade</code> - Upgrade chaincode project
 
+### AppBulder Specification File
+
+
+First step in chaincode development is design of App Builder [specification file](https://docs.oracle.com/en/database/other-databases/blockchain-enterprise/21.1/user/input-configuration-file.html). Each chaincode is built by exactly one specification file. Specification file is structured in the following way:
+```yaml
+assets: 
+    name:
+    properties:
+        name:
+        type:
+        id:
+        derived:
+           strategy:
+           algorithm:
+           format:
+        mandatory:
+        default:
+        validate:
+    methods:
+        crud:
+        others:
+    type:
+customMethods:
+```
+
+### Develop DLT Data Synchronization
+
+
+
+```yaml
+assets:
+    - name: employer
+    - name: person
+    - name: contract
+```
+```yaml
+assets:
+    - name: grant
+    - name: pension
+```
 ### Develop UC 2
