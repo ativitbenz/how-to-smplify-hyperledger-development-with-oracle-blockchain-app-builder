@@ -103,7 +103,6 @@ assets:
           - name: door
             type: string
 customMethods:
-    - executeQuery
     - "createRelationship(employeeId: string, employerId: string, workingHours: number, effectiveDate: Date, contractDate: Date, contractId: string)"
     - "updateRelationship(contractId: string, workingHours: number, effectiveDate: Date)"
     - "terminateRelationship(contractId: string, effectiveDate: Date)"
@@ -111,3 +110,4 @@ customMethods:
     - "suspendRelationshipEnd(contractId: string, suspensionEndDate: Date)"
     - "suspendAllRelationshipStart(employeeId: string, suspensionStartDate: number)"
     - "suspendAllRelationshipEnd(employeeId: string, suspensionEndDate: number)"
+    - executeQuery

@@ -1,0 +1,135 @@
+import { Shim } from 'fabric-shim';
+
+    @Validator(yup.string(), yup.string(), yup.number(), yup.date(), yup.date(), yup.string())
+    public async createRelationship(employeeId: string, employerId: string, workingHours: number, effectiveDate: Date, contractDate: Date, contractId: string) {
+        try {
+            const employer = await this.Ctx.Model.get(employerId, Employer);
+            const employee = await this.Ctx.Model.get(employeeId, Person);
+    
+            const contract = new Contract({
+                contractId: "C" + contractId,
+                contractDate: contractDate,
+                personId: employeeId,
+                employerId: employerId,
+                weekWorkingHours: workingHours,
+                insuranceStart: effectiveDate
+            });
+    
+            var savedContract = await this.Ctx.Model.save(contract);
+    
+            employer.contracts.push(savedContract.contractId);
+            employee.contracts.push(savedContract.contractId);
+    
+            await this.Ctx.Model.update(employee);
+            await this.Ctx.Model.update(employer);
+    
+            return `Person with tin '${employeeId}' has been registered as an employee of '${employerId}'`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.number(), yup.date())
+    public async updateRelationship(contractId: string, workingHours: number, effectiveDate: Date) {
+        try {
+            const existingContract = await this.Ctx.Model.get(contractId, Contract);
+            existingContract.weekWorkingHours = workingHours;
+            await this.Ctx.Model.update(existingContract);
+            return `Contract with tin '${contractId}' has been changed with date '${effectiveDate}'`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.date())
+    public async terminateRelationship(contractId: string, effectiveDate: Date) {
+        try {
+            var existingContract = await this.Ctx.Model.get(contractId, Contract);
+    
+            const employer = await this.Ctx.Model.get(existingContract.employerId, Employer);
+            const person = await this.Ctx.Model.get(existingContract.personId, Person);
+    
+            existingContract.insuranceEnd = effectiveDate;
+            await this.Ctx.Model.update(existingContract);
+    
+            const i = person.contracts.indexOf(contractId);
+            if (i > -1) {
+                person.contracts.splice(i, 1);
+            }
+            await this.Ctx.Model.update(person);
+    
+            const j = employer.contracts.indexOf(contractId);
+            if (j > -1) {
+                employer.contracts.splice(j, 1);
+            }
+            await this.Ctx.Model.update(employer);
+    
+            return `Contract with tin '${contractId}' has been finalized with date '${effectiveDate}'`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.date())
+    public async suspendRelationshipStart(contractId: string, suspensionStartDate: Date) {
+        try {
+            var existingContract = await this.Ctx.Model.get(contractId, Contract);
+            existingContract.suspensionStart = suspensionStartDate;
+            existingContract.suspensionEnd = undefined;
+            await this.Ctx.Model.update(existingContract);
+            return `Contract with tin '${contractId}' has been suspended with date '${suspensionStartDate}'`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.date())
+    public async suspendRelationshipEnd(contractId: string, suspensionEndDate: Date) {
+        try {
+            var existingContract = await this.Ctx.Model.get(contractId, Contract);
+            existingContract.suspensionEnd = suspensionEndDate;
+            await this.Ctx.Model.update(existingContract);
+            return `Contract with tin '${contractId}' has been suspended with date '${suspensionEndDate}'`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.number())
+    public async suspendAllRelationshipStart(employeeId: string, suspensionStartDate: number) {
+        try {
+            const person = await this.Ctx.Model.get(employeeId, Person);
+    
+            for (var i = 0; i < person.contracts.length; i++) {
+                var existingContract = await this.Ctx.Model.get(person.contracts[i], Contract);
+                existingContract.suspensionStart = new Date(suspensionStartDate);
+                existingContract.suspensionEnd = undefined;
+                await this.Ctx.Model.update(existingContract);
+            }
+            return Shim.success(Buffer.from('Suspended Successfully!'));
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.number())
+    public async suspendAllRelationshipEnd(employeeId: string, suspensionEndDate: number) {
+        try {
+            const person = await this.Ctx.Model.get(employeeId, Person);
+    
+            for (var i = 0; i < person.contracts.length; i++) {
+                var existingContract = await this.Ctx.Model.get(person.contracts[i], Contract);
+                existingContract.suspensionEnd = new Date(suspensionEndDate);
+                await this.Ctx.Model.update(existingContract);
+            }
+            return Shim.success(Buffer.from('Resumed Successfully!'));
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string())
+    public async executeQuery(query: string) {
+        const result = await this.query(query);
+        return result;
+    }

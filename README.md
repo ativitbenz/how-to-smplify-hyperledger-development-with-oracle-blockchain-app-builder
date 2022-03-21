@@ -2,8 +2,26 @@
 What is a Blockchain? What can Oracle Blockchain offer beyond Hyperledger Fabric? How to build a production-grade blockchain network with smart contracts and test them locally? Why should you leverage DLT and smart contracts in every typical architecture? Continue reading and explore highlights of Oracle Blockchain Platform, together with a new toolset for building smart contracts - Blockchain App Builder.
 
 You can find the following topics:
-* [Introduction](#introduction)
-* [Hands-On](#hands-on)
+- [How to simplify Hyperledger development with Oracle Blockchain App Builder](#how-to-simplify-hyperledger-development-with-oracle-blockchain-app-builder)
+  - [## Introduction](#-introduction)
+    - [A Blockchain](#a-blockchain)
+    - [What is Hyperledger Fabric?](#what-is-hyperledger-fabric)
+    - [How Oracle Enriched Hyperledger Fabric?](#how-oracle-enriched-hyperledger-fabric)
+    - [Whay to use App Builder for Hyperledger Development](#whay-to-use-app-builder-for-hyperledger-development)
+    - [Why Would You Use Oracle Blockchain Platform?](#why-would-you-use-oracle-blockchain-platform)
+  - [## Build Demo](#-build-demo)
+    - [Create Tax Authority (Founder Org) instance of Oracle Blockchain](#create-tax-authority-founder-org-instance-of-oracle-blockchain)
+    - [Create Work and Pension Department (Member Org) instance of Oracle Blockchain](#create-work-and-pension-department-member-org-instance-of-oracle-blockchain)
+    - [Connect Tax Authority (Founder Org) with Work and Pension Department (Member Org)](#connect-tax-authority-founder-org-with-work-and-pension-department-member-org)
+    - [Install AppBuilder CLI](#install-appbuilder-cli)
+    - [Develop Blockchain Data Synchronization (UC1)](#develop-blockchain-data-synchronization-uc1)
+      - [Create Specification File](#create-specification-file)
+      - [Generate Scaffolded Chaincode Project](#generate-scaffolded-chaincode-project)
+      - [Implement Custom Methods](#implement-custom-methods)
+      - [Run and Test Locally](#run-and-test-locally)
+      - [Deploy to the Oracle Blockchain Platform](#deploy-to-the-oracle-blockchain-platform)
+      - [Test REST Proxy With Postman](#test-rest-proxy-with-postman)
+    - [Develop Blockchain Automation (UC2)](#develop-blockchain-automation-uc2)
 
 ## Introduction
 ------
@@ -39,7 +57,23 @@ Oracle Blockchain Platform is a managed blockchain solution designed to set up H
 
 From the architectural diagram above, you can spot the added value of the Oracle Blockchain Platform in terms of REST APIs, Administrative Console, and Managed infrastructure. Rest Proxy enables fluid REST communication with Hyperledger Fabric APIs (otherwise, you need to use SDK and configure it). This significantly impacts native JavaScipt applications, removing the need to build proxy NodeJS services for accessing Hyperledger nodes. The administrative console makes the administration more manageable compared to the vanilla Hyperledger implementation. Use the user interface to manage nodes, create channels, deploy chaincodes. Managed infrastructure removes a significant maintenance burden from your back.
 
-To make Hyperledger Fabric development more manageable, Oracle developed a toolset for rapid blockchain development - Blockchain App Builder. It comprises CLI and Visual Studio Code extensions that help develop, test, debug, and deploy smart contracts (chaincodes) on Oracle Blockchain networks.
+Writing chaincodes and operations on vanilla Hyperledger Fabric is quite a demanding job. Imagine all the nodes in containers you need to maintain on different computes in a multi-cloud environment. And what about coding? How do you test? How much time do you need to wait within each deployment on the network? For sure, it's not a trivial task. Oracle developed a toolset for rapid development to make it more manageable - Blockchain App Builder.
+
+### Whay to use App Builder for Hyperledger Development
+Oracle developed Oracle Blockchain App Builder as a toolset for rapid and manageable Hyperledger Fabric development that helps to develop, test, debug, and deploy smart contracts (chaincodes). It is comprised of:
+* CLI ([Install AppBuilder CLI](#install-appbuilder-cli))
+* Visual Studio Code extension
+* Blockchain Development Kit ([Develop DLT chaincode](#develop-dlt-data-synchronization))
+
+CLI makes a developer's life much more straightforward. It helps you build a fully-functional chaincode project from a specification file quickly, then run and test it on a local Hyperledger Fabric network, moving it to the production-ready Oracle Blockchain Platform network.
+
+Visual Studio Code extension is more user-friendly usage of CLI operations. In this tutorial, I will be using the pure CLI approach.
+
+Blockchain Development Kit is a framework that App Builder provides. Kit's process starts with designing the Specification file, which is then transformed into the scaffold chaincode project. It's a boilerplate project implemented in a preferred language. BDK supports TypeScript and Go languages. A scaffold chaincode project will save you time since it generates assets with basic CRUD operations(Hyperledeger's data entity) and chaincodes (Hyperledeger's business logic and smart contracts). Even if you don't add any custom operations, the boilerplate project will serve as a chaincode capable of executing basic chaincode operations, such as creating, reading, updating, and deleting assets. It significantly accelerates the development, making you feel like using a simple MongoDB database with all CRUD operations.
+
+![](images/appbuilder-process-1.png)
+
+Once the scaffold chaincode project is enriched with business logic (custom methods), it can be tested locally and deployed on the production-ready Oracle Blockchain Platform from a single CLI command. All of the phases of BDK are engaged by the CLI commands.
 
 ### Why Would You Use Oracle Blockchain Platform?
 
@@ -50,6 +84,8 @@ The below diagram depicts citizen-to-government processes in everyday communicat
 ![](images/uc-egov-1.png)
 
 Examining the upper diagram, you can notice that the entity "Person" repeats across all three institutions. It means that, most probably, all three institutions are owners of the master data. The data might be personal information such as first name, last name, address, etc. Do you want to change your data within each institution separately? Or would you prefer to follow the only-once principle? Naturally, you would like to submit it once to one institution and propagate data atomically in other institutions. The later statement follows the EU [Once Only Principle](https://ec.europa.eu/digital-building-blocks/wikis/display/CEFDIGITAL/Once+Only+Principle).
+
+The upper example is an excellent way of achieving Blockchain Data Synchronization within dispersed networks, making the single source of truth. We will demonstrate the power of data synchronization in chapter [Blockchain Data Synchronization (UC1)](#develop-blockchain-data-synchronization-uc1).
 
 For years, there has been a significant investment in integrating these kinds of systems across different countries. You remember the terms of service buses, SOA, BPEL, and others. In general, it's a good architectural pattern of integrating distributed systems. The right question might be whether it is fast to develop and cost-effective.
 
@@ -62,6 +98,8 @@ What else Hypeledger Fabric brings to the government processes? The true power o
 The picture below describes how smart contracts can automate "Contract" and "Grant" entities. Each time a citizen receives an approved maternity/paternity leave grant, all working contracts should be automatically suspended until the leave expires. In that case, you would need to visit only one institution and let the blockchain do the magic in all other institutions. It's an excellent example of frictionless government experience relying on technical enablers capable of doing so.
 
 ![](images/uc-egov-3.png)
+
+The upper example highlights the value of automation within dispersed networks to increase trust among members and speed of the integrated process. At the same time, it removes the uncertainty of manual integrations and human mistakes. We will demonstrate the power of automation in chapter [Blockchain Data Automation (UC2)](#develop-blockchain-automation-uc2).
 
 What is the next step? Let's build a blockchain network and independent government systems.
 
@@ -133,18 +171,6 @@ Let's connect blockchain organizations created in previous chapters. Admins of t
 8. exchange orderers
 9. create channel
 
-### AppBuilder Intro
-Oracle Blockchain App Builder is a toolset for rapid and manageable Hyperledger Fabric development that helps to develop, test, debug, and deploy smart contracts (chaincodes). It is comprised of:
-* [CLI](#install-appbuilder-cli)
-* Visual Studio Code extension
-* Specification files
-
-Visual Studio Code extension is user friendly managment of CLI operations. In this tutorial, I will use only CLI.
-
-App Builder process starts with design of Specification file, which is then transformed into the scaffold chaincode project. It's a boilerplate project implemented in preffered language: TypeScript or Go. Scaffold chaincode project will save you a lot of time, since it generates assets with basic CRUD operations. Even if you don't add any custom operations, generated project will server as a chaincode capable of executing basic chaincode operatiosn, such as creating, reading, updating and deleting assets.
-![](images/appbuilder-process-1.png)
-Running and deployind options from the upper diagram are closely coupled with the ochain CLI after the scaffold chaincode is generated.
-
 ### Install AppBuilder CLI
 Installation of App Builder is dependent upon your operating system. Please follow the detailed guide from [official docs](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/usingoci/install-and-configure-dev-tools-cli.html).
 
@@ -159,10 +185,8 @@ If the installation was successful, you can run the ```ochain``` command. Type `
 * <code>sync</code> - Synchronize changes from spec file to the required chaincode
 * <code>upgrade</code> - Upgrade chaincode project
 
-### AppBulder Specification File
-
-
-First step in chaincode development is design of App Builder [specification file](https://docs.oracle.com/en/database/other-databases/blockchain-enterprise/21.1/user/input-configuration-file.html). Each chaincode is built by exactly one specification file. Specification file is structured in the following way:
+### Develop Blockchain Data Synchronization (UC1)
+The first step in chaincode development is designing the App Builder [specification file](https://docs.oracle.com/en/database/other-databases/blockchain-enterprise/21.1/user/input-configuration-file.html). As explained in the introduction, a specification file is a YAML document containing assets (data entities) and their properties (entity's attributes) enriched with basic CRUD operations. Additionally, the specification file contains custom methods (smart contracts) to handle and orchestrate distributed business processes. When the specification file is ready and complete, you should run initialize to transform specification into scaffolded chaincode. Each chaincode is built by exactly one specification file. The specification file is structured in the following way:
 ```yaml
 assets: 
     name:
@@ -183,20 +207,233 @@ assets:
     type:
 customMethods:
 ```
+#### Create Specification File
+We will now create the specification file for a chaincode responsible for data synchronization across multiple organizations. Observe business architecture from the diagram below and try to detect the first chaincode contents (assets and custom methods).
 
-### Develop DLT Data Synchronization
+![](images/uc-egov-2.png)
 
-
-
+If you focus on the Tax Authority org from the diagram, it holds master data records of Person, Employer, and Contract entities. The relationship between entities implies that each citizen (Person) can be employed by multiple companies (Employer) registered by working contracts (Contract). Each company has many working contracts with many citizens. When applied to the specification file, assets would look like:
 ```yaml
 assets:
     - name: employer
     - name: person
     - name: contract
 ```
+Each asset has different properties and attributes. For example, a Person has properties, such as tax identification number, first name, last name, date of birth, citizenship, address, etc. When enriching specification file with asset properties, you will get create similar to:
+```yaml
+assets:
+    - name: employer
+      properties:
+          - name: taxNumber
+            type: string
+            mandatory: true
+            id: true
+            validate: min(11),max(11)
+          - name: name
+            type: string
+            mandatory: true
+          - name: phone
+            type: string
+          - name: email
+            type: string
+            validate: email()
+          - name: address
+            type: address
+          - name: employees
+            type: string[]
+          - name: contracts
+            type: string[]
+      methods:
+          crud: [create, getById, update, delete]
+          others: [getHistoryById, getByRange]
+    - name: person
+      properties:
+          - name: taxIdentificationNumber
+            type: string
+            mandatory: true
+            id: true
+          - name: tajNumber
+            type: string
+            mandatory: true
+          - name: firstName
+            type: string
+            mandatory: true
+          - name: lastName
+            type: string
+            mandatory: true
+          - name: dateOfBirth
+            type: date
+          - name: citizenship
+            type: string
+          - name: address
+            type: address
+          - name: employers
+            type: string[]
+          - name: contracts
+            type: string[]
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange]
+    - name: contract
+      properties:
+        - name: contractId
+          type: string
+          mandatory: true
+          id: true
+        - name: contractDate
+          type: date
+          mandatory: true
+        - name: personId
+          type: string
+          mandatory: true
+        - name: employerId
+          type: string
+          mandatory: true
+        - name: weekWorkingHours
+          type: number
+        - name: insuranceStart
+          type: date
+        - name: insuranceEnd
+          type: date
+        - name: suspensionStart
+          type: date
+        - name: suspensionEnd
+          type: date
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange]
+    - name: address
+      type: embedded
+      properties:
+          - name: city
+            type: string
+            mandatory: true
+          - name: postalCode
+            type: string
+            mandatory: true
+          - name: streetName     
+            type: string
+            mandatory: true
+          - name: houseNumber     
+            type: string
+            mandatory: true
+          - name: building
+            type: string
+          - name: entrace
+            type: string
+          - name: floor
+            type: string
+          - name: door
+            type: string
+```
+Notice the fourth asset from the snippet above - Address. It's an embedded asset, reusable for both Employer and Person assets. You can consider it as the composition pattern in OOP. Also, it's essential to highlight methods block from the snippet above, enabling auto-generation of CRUD operations within the scaffold code:
+```yaml
+...
+methods:
+    crud: [create, getById, update, delete]
+    others: [getHistoryById, getByRange]
+...
+```
+When the block is attached to the asset, the generated scaffolded chaincode will implement all the basic CRUD operations without your intervention.
+
+With that, assets are well-defined and ready for data synchronization. And yet, we still miss the business logic which can connect people, employers, and work contracts. We still miss smart contracts to correlate business events among multiple assets. A good example might be a smart contract which registers a person with an employer through one or more working contracts:
+```yaml
+customMethods:
+    - "createRelationship(employeeId: string, employerId: string, workingHours: number, effectiveDate: Date, contractDate: Date, contractId: string)"
+```
+
+After you detect all the necessary business processes over the assets in the chaincode, you create a list of custom methods. You will implement those methods afterward when the scaffolded project is generated. Let's add all the required smart contracts in the customMethods block:
+```yaml
+customMethods:
+    - "createRelationship(employeeId: string, employerId: string, workingHours: number, effectiveDate: Date, contractDate: Date, contractId: string)"
+    - "updateRelationship(contractId: string, workingHours: number, effectiveDate: Date)"
+    - "terminateRelationship(contractId: string, effectiveDate: Date)"
+    - "suspendRelationshipStart(contractId: string, suspensionStartDate: Date)"
+    - "suspendRelationshipEnd(contractId: string, suspensionEndDate: Date)"
+    - "suspendAllRelationshipStart(employeeId: string, suspensionStartDate: number)"
+    - "suspendAllRelationshipEnd(employeeId: string, suspensionEndDate: number)"
+    - executeQuery
+```
+
+| :information_source: ```executeQuery``` method enables you to execute SQL-ish queries on top of the world state database! Count, group, filter assets and more. Detailed instructions can be found [here](https://docs.oracle.com/en/database/other-databases/blockchain-enterprise/21.1/user/supported-rich-query-syntax.html#GUID-7A7766A3-EA2C-4A3D-BE62-7B4EC747EE5B). |
+| --- |
+
+The complete specification file is available [data-synchronization-uc1.yaml](specification/data-synchronization-uc1.yaml):
+
+#### Generate Scaffolded Chaincode Project
+Position yourself in the working directory. We will run the ochain init command to generate a scaffolded chaincode project.
+```console
+ochain init --cc data_synchronization --lang ts --conf specification/data-synchronization-uc1.yaml -o chaincodes
+```
+```--cc data_synchronization``` is responsible for the chaincode name, while ```--lang ts``` instructs App Builder to generate TypeScript based chaincode. ```--conf specification/data-synchronization-uc1.yaml``` selects input specification file with predefined assets and custom methods. ```-o chaincodes``` targets a directory where the chaincode project will be generated.
+After a while, you will get a confirmation of successful generation of the scaffolded project:
+```console
+added 1031 packages from 493 contributors in 91.193s
+40 packages are looking for funding
+  run `npm fund` for details
+Building data_synchronization...
+Your chaincode project is ready: data_synchronization
+```
+#### Implement Custom Methods
+
+Open the generated project, locate the file ```chaincodes/data_synchronization/src/data_synchronization.controller.ts``` and implement the custom methods at the bottom of the file. You need to implement methods createRelationship, updateRelationship, terminateRelationship, suspendRelationshipStart, suspendRelationshipEnd, suspendAllRelationshipStart, suspendAllRelationshipEnd, executeQuery. I will use the implementation in the template file [data_synchronization.controller.template](chaincodes/controller-templates/data_synchronization.controller.template).
+
+Don't forget to import the Shim (```import { Shim } from 'fabric-shim';```) on top of the ```data_synchronization.controller.ts```.
+
+Now it's an excellent time to test the chaincode readiness to save and read data.
+
+#### Run and Test Locally
+Position yourself in the working directory. We will run the ochain run command to run the chaincode project locally.
+```console
+ochain run -p chaincodes/data_synchronization
+```
+
+#### Deploy to the Oracle Blockchain Platform
+Position yourself in the working directory. Run the ochain deploy command to deploy the chaincode on the remote OBP.
+```console
+ochain deploy -u obpuser1 -s HowToBuildBlockchain1 -r https://taxauthority-emeadsappdev-fra.blockchain.ocp.oraclecloud.com:7443/ -c default -P chaincodes/data_synchronization
+```
+For deployment, you need to have a user managed by Oracle Identity Cloud Service. Provide a user who is a member of both ADMIN and REST_CLIENT roles. For more information about users and roles, see [Set Up Users and Application Roles](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/administeroci/set-users-and-application-roles.html#GUID-D70C908A-9B9B-490A-8705-84E46A618B97).
+
+Upon the successful execution, you will screen similar console output as in the picture below.
+
+![](images/chaincode-install-4.png)
+
+When you go in the Tax Authority service console and select the Chaincodes tab, you will see the fresh chaincode you have just installed, deployed on the targeted channel (default in my case).
+
+![](images/chaincode-install-1.png)
+
+Now open the Work and Pension Department service console and select ```Channels``` tab ->  ```Deployed Chaincodes```. You will see a list of pending, unapproved chaincodes. The chaincode is ready for installation on the peers owned by the Work and Pension Department. Even we never installed chaincodes in the Work and Pension Department organization manually, they have still arrived at it by gossip protocols. Since both organizations are a part of the same network, chaincode binaries were transferred to the Work and Pension Department peers, waiting for approval and activation. Gossip protocol saves significant time and effort of installing chaincodes on all member organizations. Remember, a typical blockchain network can have many participant members.
+
+![](images/chaincode-install-2.png)
+
+Press ```Approve``` to install it on the Work and Pension Department to enable inter-organization communication between both organizations.
+
+![](images/chaincode-install-3.png)
+
+Both organizations have the same chaincodes to operate. We did all the prerequisites for successful data manipulation in our network.
+
+#### Test REST Proxy With Postman
+
+Find the REST Proxy URL in the Tax Authority service console by selecting Nodes tab. Find the restproxy node and copy the URL, as in the picture below.
+
+![](images/chaincode-install-5.png) 
+
+Paste the URL in Postman collection imported from [postman.json](chaincodes/postman/postman.json) into the variable ```rest-proxy``` ```CURRENT VALUE```:
+
+![](images/chaincode-install-6.png)
+
+Enter the correct username and password of a user with REST_CLIENT role. I have used the same credentials as in the [chapter](#deploy-to-the-oracle-blockchain-platform)
+
+![](images/chaincode-install-8.png)
+
+Invoke the chaincode ```createEmployer```. When you receive response ```"returnCode": "Success"```, you have sucessfuly created new asset on the blockchain.
+
+![](images/chaincode-install-7.png)
+
+### Develop Blockchain Automation (UC2)
 ```yaml
 assets:
     - name: grant
     - name: pension
 ```
-### Develop UC 2

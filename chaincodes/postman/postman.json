@@ -1,0 +1,398 @@
+{
+	"info": {
+		"_postman_id": "eda8b702-05f5-48f1-8bfb-3249c87ab668",
+		"name": "Cloud Coaching - How to Simplify HLF Development",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createEmployer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"createEmployer\",\r\n        \"{\\\"taxNumber\\\":\\\"A1111111111\\\",\\\"name\\\":\\\"Oracle\\\",\\\"phone\\\":\\\"+1\\\",\\\"email\\\":\\\"info@oracle.com\\\",\\\"employees\\\": [],\\\"contracts\\\": []}\"\r\n    ],\r\n    \"timeout\": 18000,\r\n    \"sync\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createPerson",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"createPerson\",\r\n        \"{\\\"taxIdentificationNumber\\\":\\\"A234567890\\\", \\\"tajNumber\\\": \\\"987654321\\\", \\\"firstName\\\":\\\"Ivan\\\", \\\"lastName\\\":\\\"Delic\\\", \\\"dateOfBirth\\\": \\\"1985-06-16T12:00:00.000Z\\\", \\\"citizenship\\\":\\\"Croatian\\\", \\\"employers\\\": [], \\\"contracts\\\": []}\"\r\n    ],\r\n    \"timeout\": 18000,\r\n    \"sync\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createRelationship",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"chaincode\":\"{{chaincode_data_synchronization}}\",\"args\":[\"createRelationship\",\"4444444444\",\"44444444444\",\"40\",\"2020-10-10\",\"2021-03-19\",\"XXX\"],\"timeout\":18000,\"sync\":true}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteEmployer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"deleteEmployer\",\r\n        \"A1111111111\"\r\n    ],\r\n    \"timeout\": 18000,\r\n    \"sync\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deletePerson",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"deletePerson\",\r\n        \"11111111111\"\r\n    ],\r\n    \"timeout\": 18000,\r\n    \"sync\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getContractByRange",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"getContractByRange\",\r\n        \"\",\r\n        \"\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/chaincode-queries",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"chaincode-queries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmployerByRange",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"getEmployerByRange\",\r\n        \"\",\r\n        \"\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/chaincode-queries",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"chaincode-queries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getLeaveByRange",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_work}}\",\r\n    \"args\": [\r\n        \"getLeaveByRange\",\r\n        \"\",\r\n        \"\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/chaincode-queries",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"chaincode-queries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getPersonByRange",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"getPersonByRange\",\r\n        \"\",\r\n        \"\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/chaincode-queries",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"chaincode-queries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "startLeave",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\":\"{{chaincode_work}}\",\r\n    \"args\": [\"startLeave\",\"4444444444\", \"44444444444\",\"2021-10-01\", \"1\"],\r\n    \"timeout\":18000,\r\n    \"sync\":true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "suspendAllRelationshipStart",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\":\"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\"suspendAllRelationshipStart\",\"4444444444\",\"2021-03-22T08:22:35.474Z\"],\r\n    \"timeout\":18000,\r\n    \"sync\":true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "executeQuery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"chaincode\": \"{{chaincode_data_synchronization}}\",\r\n    \"args\": [\r\n        \"executeQuery\",\r\n        \"SELECT SUM(json_extract(valueJson, '$.weekWorkingHours')) AS weekWorkingHoursSum FROM <STATE> WHERE json_extract(valueJson, '$.assetType') = 'demo_20T1041_v2.contract' AND json_extract(valueJson, '$.personId') = '1111111111' AND json_extract(valueJson, '$.insuranceEnd') is null\"\r\n    ],\r\n    \"timeout\": 18000,\r\n    \"sync\": true\r\n}"
+				},
+				"url": {
+					"raw": "{{rest-proxy}}/{{channel}}/transactions",
+					"host": [
+						"{{rest-proxy}}"
+					],
+					"path": [
+						"{{channel}}",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "channel",
+			"value": "default"
+		},
+		{
+			"key": "rest-proxy",
+			"value": "https://taxauthority-emeadsappdev-fra.blockchain.ocp.oraclecloud.com:7443/restproxy"
+		},
+		{
+			"key": "chaincode_data_synchronization",
+			"value": "taxadministration"
+		},
+		{
+			"key": "chaincode_data_automation",
+			"value": "data_automation"
+		}
+	]
+}
