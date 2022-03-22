@@ -248,6 +248,18 @@ Your chaincode project is ready: data_synchronization
 
 Open the generated project from location ```03-develop-app/chaincodes/data_synchronization```, locate the file ```src/data_synchronization.controller.ts``` and implement the custom methods at the bottom of the file. You need to implement the following methods: ```createRelationship```, ```updateRelationship```, ```terminateRelationship```, ```suspendRelationshipStart```, ```suspendRelationshipEnd```, ```suspendAllRelationshipStart```, ```suspendAllRelationshipEnd```, and ```executeQuery```. I will use the implementation in the template file [data_synchronization.controller.template](chaincodes/custom-methods/data_synchronization.controller.template).
 
+There is a bug currently in the App Builder implementation. Locate the file ```lib/utils.ts``` and replace lines 31 and 32: 
+```ts
+let result: object;
+result['isValid'] = true;
+```
+with 
+```ts
+let result = {
+    isValid: true,
+};
+```
+
 Don't forget to import the Shim (```import { Shim } from 'fabric-shim';```) on top of the ```data_synchronization.controller.ts```, since we use it in one of the implemented methods.
 
 ### Run and Test Locally
@@ -354,9 +366,22 @@ ochain init --cc data_automation --lang ts --conf specification/data-automation-
 ```--cc data_automation``` is specifies the chaincode name, while ```--lang ts``` instructs App Builder to generate TypeScript based chaincode. ```--conf specification/data-automation-uc2.yaml``` selects input specification file with predefined assets and custom methods. ```-o chaincodes``` targets a directory where the scaffolded chaincode project will be generated.
 
 After a while, you will get a confirmation of successful generation of the scaffolded project.
+
 ### Implement Custom Methods
 
 Open the generated project from location ```03-develop-app/chaincodes/data_automation```, locate the file ```src/data_automation.controller.ts``` and implement the custom methods at the bottom of the file. You need to implement the following methods: ```startLeave```, ```endLeave```, and ```executeQuery```. I will use the implementation in the template file [data_automation.controller.template](chaincodes/custom-methods/data_automation.controller.template).
+
+There is a bug currently in the App Builder implementation. Locate the file ```lib/utils.ts``` and replace lines 31 and 32: 
+```ts
+let result: object;
+result['isValid'] = true;
+```
+with 
+```ts
+let result = {
+    isValid: true,
+};
+``` 
 
 ### Run and Test Locally
 Position yourself in the working directory. We will run the ochain run command to run the chaincode project locally.

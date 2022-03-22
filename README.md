@@ -4,3 +4,4 @@ What is a Blockchain? What can Oracle Blockchain offer beyond Hyperledger Fabric
 [01 - Blockchain Intro](01-blockchain-intro/README.md)  
 [02 - Oracle Blockchain Platform Setup](02-obp-setup/README.md)  
 [03 - App Builder Development](03-develop-app/README.md)  
+[04 - Develop and Run Demo Portals](04-develop-ui-k8s/README.md)  

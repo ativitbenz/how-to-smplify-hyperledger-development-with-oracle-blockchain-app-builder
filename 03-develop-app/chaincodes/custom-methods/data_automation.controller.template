@@ -8,7 +8,7 @@
                 employerId: employerId,
                 leaveStart: effectiveDate
             });
-            await this.Ctx.Utils.invokeChaincode("taxadministration", "suspendAllRelationshipStart", [personId, "" + effectiveDate.getTime() + ""], "default") 
+            await this.Ctx.Utils.invokeChaincode("data_synchronization", "suspendAllRelationshipStart", [personId, "" + effectiveDate.getTime() + ""], "default") 
             await this.Ctx.Model.save(leave);
             return `Leave of person with tin '${personId}' has been registered.`;
         } catch(error) {
@@ -26,7 +26,7 @@
                 employerId: employerId,
                 leaveStart: effectiveDate
             });
-            await this.Ctx.Utils.invokeChaincode("taxadministration", "suspendAllRelationshipEnd", [personId, "" + effectiveDate.getTime() + ""], "default") 
+            await this.Ctx.Utils.invokeChaincode("data_synchronization", "suspendAllRelationshipEnd", [personId, "" + effectiveDate.getTime() + ""], "default") 
             await this.Ctx.Model.save(leave);
             return `Leave of person with tin '${personId}' has been registered.`;
         } catch(error) {
