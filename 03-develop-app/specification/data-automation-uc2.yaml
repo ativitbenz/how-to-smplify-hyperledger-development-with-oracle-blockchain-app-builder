@@ -1,0 +1,43 @@
+assets:
+    - name: leave
+      properties:
+        - name: leaveId
+          type: string
+          mandatory: true
+          id: true
+        - name: leaveDate
+          type: date
+          mandatory: true
+        - name: personId
+          type: string
+          mandatory: true
+        - name: employerId
+          type: string
+          mandatory: true
+        - name: leaveStart
+          type: date
+        - name: leaveEnd
+          type: date
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange]
+    - name: pension
+      properties:
+        - name: pensionId
+          type: string
+          mandatory: true
+          id: true
+        - name: personId
+          type: string
+          mandatory: true
+        - name: pensionStart
+          type: date
+        - name: pensionEnd
+          type: date
+      methods:
+        crud: [create, getById, update, delete]
+        others: [getHistoryById, getByRange]
+customMethods:
+    - "startLeave(personId: string, employerId: string, effectiveDate: Date, contractId: string)"
+    - "endLeave(personId: string, employerId: string, effectiveDate: Date, contractId: string)"
+    - executeQuery

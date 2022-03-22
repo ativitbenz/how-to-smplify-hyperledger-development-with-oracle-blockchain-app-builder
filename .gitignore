@@ -1,4 +1,6 @@
 .DS_Store
-chaincodes/*
-!chaincodes/controller-templates
-!chaincodes/postman
+*/chaincodes/*
+!*/chaincodes/custom-methods
+!*/chaincodes/postman
+
+node_modules

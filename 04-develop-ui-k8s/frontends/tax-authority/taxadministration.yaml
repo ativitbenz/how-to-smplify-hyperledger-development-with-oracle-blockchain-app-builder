@@ -1,0 +1,70 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: taxadministration-frontend-deployment
+  labels:
+    app: taxadministration-frontend
+spec:
+  selector:
+    matchLabels:
+      app: taxadministration-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: taxadministration-frontend
+        version: v1
+    spec:
+      containers:
+        - name: taxadministration-frontend
+          image: "fra.ocir.io/frsxwtjslf35/demo/taxadministration-frontend:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_API_URL
+              value: https://founderorg1-emeadsappdev-fra.blockchain.ocp.oraclecloud.com:7443/restproxy/api/v2/channels/default
+            - name: REACT_APP_TAX_CHAINCODE
+              value: taxadministration
+            - name: REACT_APP_WORK_CHAINCODE
+              value: workandpensionsdepartment
+            - name: REACT_APP_MODE
+              value: TAXADMINISTRATION
+            - name: REACT_APP_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: obp-restproxy-token
+                  key: token
+      imagePullSecrets:
+        - name: ocirsecret
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: taxadministration-frontend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: taxadministration-frontend
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: taxadministration-frontend-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - host: "tax.blockchain.ivandelic.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: taxadministration-frontend-service
+                port:
+                  number: 3000

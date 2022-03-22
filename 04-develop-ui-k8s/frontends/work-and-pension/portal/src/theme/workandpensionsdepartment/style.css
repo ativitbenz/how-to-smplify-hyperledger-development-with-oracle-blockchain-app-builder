@@ -1,0 +1,285 @@
+html {
+  height: 100%;
+  box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: calc(100%);
+  overflow: auto;
+  background-color: #f2f2f2;
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.8125em;
+  color: #676a6c; }
+  body.tesla-body-inverse {
+    background-color: #1F2F2F; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 2em;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit; }
+
+.max-height {
+  height: 100%; }
+
+.workandpensionsdepartment a {
+  color: #ffffff; }
+
+.workandpensionsdepartment .tesla-wrapper {
+  padding-bottom: 30px; }
+
+.workandpensionsdepartment .tesla-panel {
+  padding: 15px 10px;
+  margin-top: 1.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); }
+  .workandpensionsdepartment .tesla-panel .tesla-panel-heading {
+    padding: 0 5px; }
+  .workandpensionsdepartment .tesla-panel .tesla-panel-heading > h3 {
+    margin: 0 0 .5em 0;
+    border-bottom: 1px solid #d5d5d5;
+    padding: .1em;
+    font-size: 24px; }
+  .workandpensionsdepartment .tesla-panel .tesla-panel-body {
+    margin: 0; }
+    .workandpensionsdepartment .tesla-panel .tesla-panel-body hr {
+      border-style: solid;
+      border-bottom: 0;
+      border-left: 0;
+      border-right: 0;
+      margin: 0.6em;
+      border-color: #d5d5d5; }
+
+.workandpensionsdepartment .tesla-logo {
+  width: 3.5em;
+  height: 3.5em;
+  padding: 10px;
+  text-align: center;
+  background-color: #DEB305; }
+  .workandpensionsdepartment .tesla-logo > span {
+    font-size: 25px;
+    line-height: 40px;
+    color: #d5d5d5; }
+
+.workandpensionsdepartment .tesla-width-limiter {
+  max-width: 80%;
+  margin: 0 auto; }
+
+.workandpensionsdepartment .workandpensionsdepartment-hr-bar {
+  height: 4px;
+  background-image: url("hr.png"); }
+
+.workandpensionsdepartment .tesla-bar.tesla-bar-top {
+  min-height: 130px;
+  background: #ffffff;
+  z-index: 101; }
+  .workandpensionsdepartment .tesla-bar.tesla-bar-top h1.tesla-headline {
+    margin: 0.3em 2.5em;
+    color: #ffffff;
+    white-space: nowrap; }
+  .workandpensionsdepartment .tesla-bar.tesla-bar-top .tesla-menu-icon {
+    margin: 25px;
+    max-width: 200px; }
+    .workandpensionsdepartment .tesla-bar.tesla-bar-top .tesla-menu-icon a {
+      color: #ffffff; }
+    .workandpensionsdepartment .tesla-bar.tesla-bar-top .tesla-menu-icon a:hover {
+      color: #ffffff; }
+  .workandpensionsdepartment .tesla-bar.tesla-bar-top > .tesla-menu-text {
+    color: #ffffff; }
+    .workandpensionsdepartment .tesla-bar.tesla-bar-top > .tesla-menu-text.tesla-pull-left {
+      padding-left: 50px; }
+    .workandpensionsdepartment .tesla-bar.tesla-bar-top > .tesla-menu-text > li > a {
+      line-height: 50px;
+      color: inherit;
+      width: 100%;
+      height: 100%;
+      display: block; }
+    .workandpensionsdepartment .tesla-bar.tesla-bar-top > .tesla-menu-text > li:hover {
+      background-color: #f2f2f2;
+      color: #ffffff; }
+
+.workandpensionsdepartment .tesla-bar.tesla-bar-side {
+  background: #1F2F2F; }
+  .workandpensionsdepartment .tesla-bar.tesla-bar-side .tesla-menu-icon a {
+    color: #DEB305; }
+  .workandpensionsdepartment .tesla-bar.tesla-bar-side .tesla-menu-icon a:hover {
+    color: #1F2F2F; }
+
+.workandpensionsdepartment .tesla-menu.tesla-menu-icon {
+  margin: 0;
+  list-style: none; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-icon a {
+    color: #ffffff;
+    display: block;
+    text-align: center; }
+    .workandpensionsdepartment .tesla-menu.tesla-menu-icon a > span {
+      font-size: 3.5em; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-icon a:hover {
+    background-color: #f2f2f2; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-icon.tesla-menu-icon-horizontal {
+    background-color: #ffffff;
+    padding: 0 5px;
+    position: absolute;
+    right: 0; }
+    .workandpensionsdepartment .tesla-menu.tesla-menu-icon.tesla-menu-icon-horizontal > li {
+      float: left; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-icon.tesla-menu-icon-vertical {
+    padding: 1em 0; }
+
+.workandpensionsdepartment .tesla-menu.tesla-menu-text {
+  margin: 0;
+  list-style: none; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-text a {
+    color: #ffffff;
+    font-size: 18px;
+    text-decoration: none; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-text.tesla-menu-text-horizontal {
+    padding: 0 5px; }
+    .workandpensionsdepartment .tesla-menu.tesla-menu-text.tesla-menu-text-horizontal > li {
+      padding: 0 20px;
+      float: left; }
+  .workandpensionsdepartment .tesla-menu.tesla-menu-text.tesla-menu-text-vertical {
+    padding: 5px 0; }
+
+.workandpensionsdepartment .tesla-ctrl-header {
+  height: 40px;
+  margin: 15px 0 20px; }
+  .workandpensionsdepartment .tesla-ctrl-header > h1 {
+    margin: 0;
+    padding: 7px 5px; }
+  .workandpensionsdepartment .tesla-ctrl-header.tesla-toolbox {
+    text-align: right; }
+
+.workandpensionsdepartment .tesla-login {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  margin-top: -110px; }
+  .workandpensionsdepartment .tesla-login .tesla-panel {
+    width: 400px;
+    margin: 0 auto;
+    box-shadow: 6px 6px 6px #DEB305; }
+  .workandpensionsdepartment .tesla-login .ui-panelgrid .ui-panelgrid-cell {
+    padding: 10px; }
+
+.workandpensionsdepartment .tesla-clear {
+  clear: both; }
+
+.workandpensionsdepartment .tesla-pull-right {
+  float: right; }
+
+.workandpensionsdepartment .tesla-pull-left {
+  float: left; }
+
+.workandpensionsdepartment .tesla-no-alter {
+  background: transparent; }
+
+.workandpensionsdepartment .tesla-table-no-header thead {
+  display: none; }
+
+.workandpensionsdepartment .tesla-table-transparent table > tbody {
+  background: transparent; }
+  .workandpensionsdepartment .tesla-table-transparent table > tbody > tr {
+    background: transparent; }
+    .workandpensionsdepartment .tesla-table-transparent table > tbody > tr > td {
+      background: transparent; }
+    .workandpensionsdepartment .tesla-table-transparent table > tbody > tr.ui-datatable-odd {
+      background: transparent; }
+    .workandpensionsdepartment .tesla-table-transparent table > tbody > tr.ui-datatable-even {
+      background: transparent; }
+
+.workandpensionsdepartment .tesla-master-panel-fixed {
+  position: fixed;
+  background-color: #f2f2f2;
+  top: 0px;
+  left: 50px; }
+
+.workandpensionsdepartment .tesla-master-panel-scroll .ui-datatable .ui-paginator.ui-paginator-bottom {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  background: #ffffff;
+  border: 0; }
+
+.workandpensionsdepartment .button-container {
+  text-align: right; }
+  .workandpensionsdepartment .button-container .p-button {
+    margin-left: 0.5em; }
+
+/* +++++++++++++++++++++++++++++++++
+   +++++ Primfaces overrides  ++++++ 
+   +++++++++++++++++++++++++++++++++ */
+.workandpensionsdepartment .wc .p-component.p-dropdown {
+  width: 100%; }
+
+.workandpensionsdepartment .wc .p-component.p-inputtext {
+  width: 100%; }
+
+.workandpensionsdepartment .wc .p-dataview .p-dataview-content {
+  border: none; }
+  .workandpensionsdepartment .wc .p-dataview .p-dataview-content .item {
+    cursor: pointer; }
+  .workandpensionsdepartment .wc .p-dataview .p-dataview-content .item:hover {
+    background-color: #e7f2f7; }
+  .workandpensionsdepartment .wc .p-dataview .p-dataview-content .item-selected {
+    background-color: #e7f2f7;
+    color: #ffffff; }
+
+.workandpensionsdepartment .ui-picklist.ui-picklist-responsive .ui-picklist-list-wrapper {
+  width: 45%; }
+
+.workandpensionsdepartment .ui-picklist .ui-picklist-list li {
+  height: 24px; }
+  .workandpensionsdepartment .ui-picklist .ui-picklist-list li .fa-fw {
+    font-size: 1.2em;
+    color: #ffffff;
+    margin-right: 6px; }
+
+.workandpensionsdepartment .tesla-panel .tesla-panel-body > .ui-panelgrid.ui-widget > .ui-widget-content {
+  border: 0; }
+
+.workandpensionsdepartment .ui-outputlabel .ui-outputlabel-rfi {
+  display: none; }
+
+.workandpensionsdepartment .p-tabmenu .p-tabmenu-nav {
+  background-color: transparent;
+  border: none; }
+  .workandpensionsdepartment .p-tabmenu .p-tabmenu-nav .p-tabmenu-ink-bar {
+    height: 4px;
+    background-color: #DEB305; }
+  .workandpensionsdepartment .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    background-color: transparent;
+    color: #ffffff; }
+  .workandpensionsdepartment .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:hover {
+    color: #DEB305 !important; }
+
+.workandpensionsdepartment .p-card {
+  margin-top: 30px; }
+  .workandpensionsdepartment .p-card .p-card-content {
+    padding: 1rem; }
+  .workandpensionsdepartment .p-card .p-card-title {
+    padding: 1rem 1rem 0 1rem;
+    margin-bottom: 0; }
+
+.workandpensionsdepartment .p-divider-dashed.p-divider-horizontal:before {
+  border-top-style: dashed; }
+
+.workandpensionsdepartment .p-timeline .p-button-link {
+  padding: 0;
+  text-align: left;
+  margin-left: -8px;
+  background-color: transparent; }
+
+.workandpensionsdepartment .p-tag {
+  margin-right: 5px;
+  background-color: #DEB305; }
+
+.workandpensionsdepartment .p-button {
+  background-color: #DEB305; }

@@ -1,0 +1,41 @@
+    @Validator(yup.string(), yup.string(), yup.date(), yup.string())
+    public async startLeave(personId: string, employerId: string, effectiveDate: Date, contractId: string) {
+        try {
+            const leave = new Leave({
+                leaveId: contractId,
+                leaveDate: effectiveDate,
+                personId: personId,
+                employerId: employerId,
+                leaveStart: effectiveDate
+            });
+            await this.Ctx.Utils.invokeChaincode("taxadministration", "suspendAllRelationshipStart", [personId, "" + effectiveDate.getTime() + ""], "default") 
+            await this.Ctx.Model.save(leave);
+            return `Leave of person with tin '${personId}' has been registered.`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string(), yup.string(), yup.date(), yup.string())
+    public async endLeave(personId: string, employerId: string, effectiveDate: Date, contractId: string) {
+        try {
+            const leave = new Leave({
+                leaveId: contractId,
+                leaveDate: effectiveDate,
+                personId: personId,
+                employerId: employerId,
+                leaveStart: effectiveDate
+            });
+            await this.Ctx.Utils.invokeChaincode("taxadministration", "suspendAllRelationshipEnd", [personId, "" + effectiveDate.getTime() + ""], "default") 
+            await this.Ctx.Model.save(leave);
+            return `Leave of person with tin '${personId}' has been registered.`;
+        } catch(error) {
+            throw new Error(error.message);
+        }
+    }
+
+    @Validator(yup.string())
+    public async executeQuery(query: string) {
+        const result = await this.query(query);
+        return result;
+    }
