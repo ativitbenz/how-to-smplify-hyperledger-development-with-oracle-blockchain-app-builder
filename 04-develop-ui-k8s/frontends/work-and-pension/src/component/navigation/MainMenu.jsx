@@ -10,12 +10,10 @@ class MainMenu extends Component {
     activeItem() {
         if (window.location.pathname.startsWith("/persons"))
             return this.props.items[1];
-        else if (window.location.pathname.startsWith("/employers"))
+        else if (window.location.pathname.startsWith("/pensions"))
             return this.props.items[2];
-        else if (window.location.pathname.startsWith("/contracts"))
+        else if (window.location.pathname.startsWith("/grants"))
             return this.props.items[3];
-        else if (window.location.pathname.startsWith("/transactions"))
-            return this.props.items[4];
         else
             return null;
     }

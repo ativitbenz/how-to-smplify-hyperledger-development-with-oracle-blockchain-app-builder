@@ -1,7 +1,5 @@
 # Develop Hyperledger Fabric Applications With App Builder
 
----
-
 - [Develop Hyperledger Fabric Applications With App Builder](#develop-hyperledger-fabric-applications-with-app-builder)
   - [Prerequisites](#prerequisites)
     - [Install AppBuilder CLI](#install-appbuilder-cli)
@@ -25,7 +23,6 @@ Oracle developed Oracle Blockchain App Builder as a toolset for rapid and manage
 
 ## Prerequisites
 
----
 ### Install AppBuilder CLI
 Installation of App Builder is dependent upon your operating system. Please follow the detailed guide from [official docs](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/usingoci/install-and-configure-dev-tools-cli.html).
 
@@ -48,8 +45,6 @@ You can re-use the account you used to provision Oracle Blockchain Platform sinc
 | If you build a prodution-ready network, you would likely create a dedicated user account(s) to enable CLI chaincode deployments and invocation of chaincodes through REST Proxy. Created user will need to be assigned to both ```ADMIN``` and ```REST_CLIENT``` roles. Please follow the official guide [Set Up Users and Application Roles](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/administeroci/set-users-and-application-roles.html#GUID-D70C908A-9B9B-490A-8705-84E46A618B97).|
 
 ## App Builder Basics
-
----
 The first step in chaincode development is designing the App Builder [specification file](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/usingoci/input-configuration-file.html). As explained in the [introduction](../01-blockchain-intro/README.md#what-is-app-builder), a specification file is a YAML document containing assets (data entities) and their properties (entity's attributes) enriched with basic CRUD operations. Additionally, the specification file contains custom methods (smart contracts) to handle and orchestrate distributed business processes. When the specification file is ready and complete, you should run initialize to transform specification into scaffolded chaincode. Each chaincode is built by exactly one specification file. The specification file is structured in the following way:
 ```yaml
 assets: 
@@ -74,7 +69,6 @@ customMethods:
 
 ## UC1: Develop Blockchain Data Synchronization
 
----
 ### Create Specification File
 We will now create the specification file ```data-synchronization-uc1.yaml``` for a chaincode responsible for data synchronization across multiple organizations, in our case ```Tax Authority``` and ```Work and Pension Department```. Please observe the business architecture from the diagram below and try to find good candidates for the first chaincode contents (assets and custom methods).
 
@@ -269,35 +263,38 @@ ochain run -p chaincodes/data_synchronization
 ```
 
 ### Deploy to the Oracle Blockchain Platform
-Position yourself in the root of ```03-develop-app``` directory. Run the ```ochain deploy``` command to deploy the chaincode on the remote OBP.
+1. Position yourself in the root of ```03-develop-app``` directory. Run the ```ochain deploy``` command to deploy the chaincode on the remote OBP.
 ```console
 ochain deploy -u <blockchain_user> -s <blockchain_pass> -r <blockchain_url> -c default -P chaincodes/data_synchronization
 ```
 * ```<blockchain_user>``` is the user defined in the [introduction](#create-blockcahin-user)
 * ```<blockchain_pass>``` is the user password
 * ```<blockchain_url>``` is the service console URL of the ```Tax Authority``` organization. In my case it is ```https://taxauthority-emeadsappdev-fra.blockchain.ocp.oraclecloud.com:7443/```.
-
-Upon the successful execution, you will see something similar to:
-
+2. Upon the successful execution, you will see something similar to:
 ![](images/chaincode-install-4.png)
-
-When you open ```Tax Authority``` service console and select the ```Chaincodes``` tab, you will see the fresh chaincode you have just installed, deployed on the targeted channel (in my case ```default```).
-
+3. When you open ```Tax Authority``` service console and select the ```Chaincodes``` tab, you will see the fresh chaincode you have just installed, deployed on the targeted channel (in my case ```default```).
 ![](images/chaincode-install-1.png)
+4. We still didn't installed the chaincode binaries on the ```Work and Pension Department``` organization, and now is the right time. Position yourself in ```03-develop-app/chaincodes/data_synchronization``` folder. Run the command:
+```console
+ochain package
+```
+This will package the chaincode within a zip file, located in the ```03-develop-app/chaincodes/data_synchronization``` folder.
 
-Now open the ```Work and Pension Department``` service console and select ```Channels``` tab ->  ```Deployed Chaincodes```. You will see a list of pending, unapproved chaincodes. The chaincode is ready for installation on peers owned by the ```Work and Pension Department```. Even we never installed chaincodes in the ```Work and Pension Department``` organization manually, they have still arrived at it by gossip protocols. Since both organizations are a part of the same network, chaincode binaries were transferred to the ```Work and Pension Department``` peers, waiting for approval and activation. Gossip protocol saves significant time and effort of installing chaincodes on all member organizations. Remember, a typical blockchain network can have many participant members.
-
+5. Next step is to install the chaincode binaries, but not to deploy it on the channel within ```Work and Pension Department``` organization. Open the ```Work and Pension Department``` service console and select ```Chaincodes``` tab. Press ```Deploy a New Chaincode``` button.
+![](images/chaincode-install-17.png)
+6. Select ```Advanced Deployment```, since we will only install chaincode binaries, but we won't deploy it on the channel in this step.
+![](images/chaincode-install-18.png)
+7. Fill Package Label with ```data_synchronization``` and select ```Node``` as Chaincode Language. Select both Targeted Peers (```peer0``` and ```peer1```) and upload Chaincode Source ```data_synchronization.zip``` file from the location where you executed package command (```03-develop-app/chaincodes/data_synchronization```).
+![](images/chaincode-install-19.png)
+8. Finally, press Close button, since we don't want to deploy the chaincode on the channel. Instead, we will approve the incoming deployment from ```Tax Authority```.
+![](images/chaincode-install-20.png)
+9. In the ```Work and Pension Department``` service console and select ```Channels``` tab ->  ```Deployed Chaincodes```. You will see a list of pending, unapproved chaincodes. The chaincode is ready for installation on peers owned by the ```Work and Pension Department```. 
 ![](images/chaincode-install-2.png)
-
-Press ```Approve``` to install it on the ```Work and Pension Department``` to enable inter-organization communication between organizations.
-
+10. Press ```Approve``` to install it on the ```Work and Pension Department``` to enable inter-organization communication between organizations.
 ![](images/chaincode-install-3.png)
-
-Both organizations have the same chaincodes to operate. We did all the prerequisites for successful data manipulation in our network.
+11. Both organizations have the same chaincodes to operate. We did all the prerequisites for successful data manipulation in our network.
 
 ## UC2: Develop Blockchain Data Automation
-
----
 It's time to develop the second chaincode for data automation, playing the significant role as smart contracts across the blockchain. The true power of the blockchain lies in the automation of smart contracts. Imagine an example where you are becoming a fresh parent. You would probably (1) suspend your working contract and (2) activate the maternity/paternity leave to receive compensation from the government. The process is fully manual, since you contact two distinct organizations. Let's create an automation that would enable you to visit only one institution and let the blockchain do the magic in all other institutions.
 
 ### Create Specification File
@@ -384,41 +381,46 @@ let result = {
 ``` 
 
 ### Run and Test Locally
-Position yourself in the working directory. We will run the ochain run command to run the chaincode project locally.
+Running chaincodes locally is a great approach for chaincode development and unit testing. It's quick ad simple, giving you an instant response, while the environment can be destroyed and recreated multiple times.  
+Position yourself in the working directory. Run the ```ochain run``` command to run the chaincode project. You will run Hyperledger Fabric components in the local Docker.
 ```console
 ochain run -p chaincodes/data_automation
 ```
+If all the components run smoothly, you are good to go with the next steps.
 
 ### Deploy to the Oracle Blockchain Platform
-Position yourself in the root of ```03-develop-app``` directory. Run the ```ochain deploy``` command to deploy the chaincode on the remote OBP.
+1. Position yourself in the root of ```03-develop-app``` directory. Run the ```ochain deploy``` command to deploy the chaincode on the remote OBP.
 ```console
 ochain deploy -u <blockchain_user> -s <blockchain_pass> -r <blockchain_url> -c default -P chaincodes/data_automation
 ```
 * ```<blockchain_user>``` is the user defined in the [introduction](#create-blockcahin-user)
 * ```<blockchain_pass>``` is the user password
 * ```<blockchain_url>``` is the service console URL of the ```Work and Pension Department``` organization. In my case it is ```https://workpensiondept-emeadsappdev-fra.blockchain.ocp.oraclecloud.com:7443/```.
-
-Upon the successful execution, you will screen similar console output as in the picture below.
-
+2. Upon the successful execution, you will screen similar console output as in the picture below.
 ![](images/chaincode-install-4.png)
-
-When you open ```Work and Pension Department``` service console and select the ```Chaincodes``` tab, you will see the fresh chaincode you have just installed, deployed on the targeted channel (in my case ```default```).
-
+3. When you open ```Work and Pension Department``` service console and select the ```Chaincodes``` tab, you will see the fresh chaincode you have just installed, deployed on the targeted channel (in my case ```default```).
 ![](images/chaincode-install-9.png)
+4. We still didn't installed the chaincode binaries on the ```Tax Authority``` organization, and now is the right time. Position yourself in ```03-develop-app/chaincodes/data_automation``` folder. Run the command:
+```console
+ochain package
+```
+This will package the chaincode within a zip file, located in the ```03-develop-app/chaincodes/data_automation``` folder.
 
-Now open the ```Tax Authority``` service console and select ```Channels``` tab ->  ```Deployed Chaincodes```. You will see a list of pending, unapproved chaincodes. The chaincode is ready for installation on peers owned by the ```Tax Authority```. Even we never installed chaincodes in the ```Tax Authority``` organization manually, they have still arrived at it by gossip protocols. Since both organizations are a part of the same network, chaincode binaries were transferred to the ```Tax Authority``` peers, waiting for approval and activation. Gossip protocol saves significant time and effort of installing chaincodes on all member organizations. Remember, a typical blockchain network can have many participant members.
-
+5. Next step is to install the chaincode binaries, but not to deploy it on the channel within ```Tax Authority``` organization. Open the ```Tax Authority``` service console and select ```Chaincodes``` tab. Press ```Deploy a New Chaincode``` button.
+![](images/chaincode-install-13.png)
+6. Select ```Advanced Deployment```, since we will only install chaincode binaries, but we won't deploy it on the channel in this step.
+![](images/chaincode-install-14.png)
+7. Fill Package Label with ```data_automation``` and select ```Node``` as Chaincode Language. Select both Targeted Peers (```peer0``` and ```peer1```) and upload Chaincode Source (```data_automation.zip(``` file from the location where you executed package command (```03-develop-app/chaincodes/data_automation```).
+![](images/chaincode-install-15.png)
+8. Finally, press Close button, since we don't want to deploy the chaincode on the channel. Instead, we will approve the incoming deployment from ```Work and Pension Department```.
+![](images/chaincode-install-16.png)
+9. In the ```Tax Authority``` service console and select ```Channels``` tab ->  ```Deployed Chaincodes```. You will see a list of pending, unapproved chaincodes. The chaincode is ready for installation on peers owned by the ```Tax Authority```.
 ![](images/chaincode-install-1o.png)
-
-Press ```Approve``` to install it on the ```Tax Authority``` to enable inter-organization communication between organizations.
-
+10. Press ```Approve``` to install it on the ```Tax Authority``` to enable inter-organization communication between organizations. Select the proper Package ID, that was installed in step 8.
 ![](images/chaincode-install-11.png)
-
-Both organizations have the same chaincodes version of data automation chaincode.
+11. Both organizations have the same chaincodes version of data automation chaincode.
 
 ## Test Chaincodes With Postman
-
----
 Find the ```restproxy``` URL in the ```Tax Authority``` service console by selecting ```Nodes``` tab. Copy the URL, as in the picture below.
 
 ![](images/chaincode-install-5.png) 

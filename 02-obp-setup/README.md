@@ -1,6 +1,4 @@
 # Oracle Blockchain Platform as Hyperledger Fabric Environment
-
-------
 - [Oracle Blockchain Platform as Hyperledger Fabric Environment](#oracle-blockchain-platform-as-hyperledger-fabric-environment)
   - [Introduction](#introduction)
   - [Create Tax Authority (Founder Org) Instance of Oracle Blockchain Platform](#create-tax-authority-founder-org-instance-of-oracle-blockchain-platform)
@@ -10,8 +8,6 @@
   - [Share the Channel Between Two Organizations](#share-the-channel-between-two-organizations)
 
 ## Introduction
-
-------
 Oracle Blockchain Platform is a managed blockchain solution designed to set up Hyperledger Fabric network(s). It offloads the burden of Hyperledger components maintenance, focusing you on the applications and smart contract development. Oracle Blockchain Platform provides you with all the required components to support a blockchain network: computes, storage, containers, identity services, event services, and management services.
 
 In this article, we will build a blockchain network based on the use cases [UC1 and UC2](../01-blockchain-intro/README.md#why-would-you-use-oracle-blockchain-platform). It will perfectly highlight Hyperledger Fabric capabilities:
@@ -21,8 +17,6 @@ In this article, we will build a blockchain network based on the use cases [UC1 
 The guide is based on the official Oracle Blockchain Platform [documentation](https://docs.oracle.com/en/cloud/paas/blockchain-cloud/usingoci/add-obcs-participant-organizations-network.html#GUID-2AD5218E-1CD3-4FCD-BFBC-5DD404F61443). It's advisable to crosscheck this guide with official documentation for better learning process.
 
 ## Create Tax Authority (Founder Org) Instance of Oracle Blockchain Platform
-
-------
 The first step to demonstrate our use case is to create a founder organization - ```Tax Authority```.
 Locate Blockchain Platform (Developer Services -> Blockchain Platform) in the OCI menu and click on it.      
 
@@ -48,8 +42,6 @@ After a couple of minutes, the founder instance will be ready to play.
 We leave the founder instance alone for a couple of minutes while we provision the member instance in the following chapter.
 
 ## Create Work and Pension Department (Member Org) Instance of Oracle Blockchain
-
-------
 The second step is to create a member organization to join the network created in the previous step - ```Work and Pension Department```.
 Locate Blockchain Platform (Developer Services -> Blockchain Platform) in the OCI menu and click on it.
 
@@ -68,8 +60,6 @@ Click on the button ```Create```. Your instance is getting provisioned and soon 
 ![](images/member-create-2.png)
 
 ## Connect Tax Authority (Founder Org) With Work and Pension Department (Member Org)
-
-------
 Let's connect two freshly created organizations created. Admins of the organizations will collaborate to exchange essential information.
 
 1. Go to ```Work and Pension Department``` (Member Org) service console.
@@ -88,8 +78,6 @@ Let's connect two freshly created organizations created. Admins of the organizat
 8. exchange orderers
 
 ## Activate Orderers Work and Pension Department (Member Org)
-
-------
 When you provision a member instance, it is created with 3 orderers. Those orderers are inactive until they are joined to a network. We will now activate them.
 
 1. Go to ```Work and Pension Department``` (Member Org) service console. Click on ```Nodes``` tab, and press the menu icon on the right side of ```orderer0``` node. Choose ```Export OSN Settings``` from the menu.
@@ -111,8 +99,6 @@ When you provision a member instance, it is created with 3 orderers. Those order
 9. Repeat the same for ```orderer1``` and ```orderer2``` in sequential order. Do not try to skip steps, or do premature moves, since it will fail the process.
 
 ## Share the Channel Between Two Organizations
-
-------
 Share a channel between two freshly created organizations. I'm using the ```default``` channel created by the ```Tax Authority``` (Founder Org).
 
 1. Go to ```Tax Authority``` (Founder Org) service console. Click on ```Channels``` tab, and select press the menu icon on the right side of ```default``` channel. Choose ```Edit Channel Organizations``` from the menu.
